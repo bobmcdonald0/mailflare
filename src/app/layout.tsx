@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { LanguageProvider } from "@/components/language-provider";
@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	return {
 		title: appName,
 		description: "Multi-tenant email on Cloudflare",
-		icons: { icon: "/api/branding/icon", apple: "/icon-192.png" },
+		icons: { icon: "/api/branding/icon", apple: "/apple-touch-icon.png" },
 		appleWebApp: {
 			capable: true,
 			title: appName,
@@ -46,6 +46,14 @@ export async function generateMetadata(): Promise<Metadata> {
 		},
 	};
 }
+
+// Browser and installed-app chrome match the page background (globals.css --background, light and dark).
+export const viewport: Viewport = {
+	themeColor: [
+		{ media: "(prefers-color-scheme: light)", color: "#f6f8fc" },
+		{ media: "(prefers-color-scheme: dark)", color: "#202124" },
+	],
+};
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	const locale = await getRequestLocale();
